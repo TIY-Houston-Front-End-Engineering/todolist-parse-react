@@ -38,6 +38,7 @@
 }
 
 @include gridify(2, 400);
+@include gridify(3, 600);
 @include gridify(4, 600);
 
 /**
@@ -73,8 +74,185 @@
  * GENERAL
  */
 
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url(http://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
 img {max-width:100%;}
 
 body {
     transition: opacity .25s ease;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+h3 {
+    margin: 1em auto;
+    text-align: center;
+}
+
+.container {
+    max-width: 80ch;
+    background-color: #efefef;
+    border: 2px solid #444;
+    margin: 0 auto;
+
+    * {
+        transition: opacity .25s ease, background-color .25s ease;
+        &:before, &:after {
+            transition: opacity .25s ease, background-color .25s ease;
+        }
+    }
+
+    form {
+        padding: 1em;
+        position: relative;
+
+        div {
+            position: relative;
+            margin-right: 4em;
+
+            input {
+                width: 100%;
+                padding: 1em;
+                border: 1px solid #444;
+            }
+        }
+
+        button {
+            display: inline-block;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 3rem;
+            height: 3.2rem;
+            background-color: #444;
+            color: white;
+            font-size: 2em;
+            line-height: 1em;
+            border: none;
+
+            &:hover {
+                cursor: pointer;
+                background-color: #111;
+            }
+        }
+    }
+
+    ul {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+
+        li {
+            border-bottom: 2px solid #444;
+            position: relative;
+            padding-left: 1em;
+            padding-bottom: 1em;
+            padding-right: 1em;
+            transition: all .25s ease;
+            animation: fadeDown 0.25s ease both;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .description {
+                font-size: 2em;
+            }
+
+            &.urgent {
+                background-color: #FC0;
+            }
+
+            &.isDone {
+                background-color: rgba(10,200,60,.5);
+                color: #eee;
+            }
+
+            > span {
+                display: inline-block;
+                padding: 1rem 3rem 1rem 0;
+                width: 100%;
+            }
+
+            > input[type="checkbox"] {
+                position: absolute !important;
+                top: 2em;
+                right: 1em;
+
+                &:checked ~ span {
+                    text-decoration: line-through;
+                }
+            }
+
+            input[type="checkbox"] {
+                position: relative;
+                display: inline-block;
+                width: 1.5em;
+                height: 1.2em;
+                &:hover {
+                    cursor: pointer
+                }
+                &:after, &:before {
+                    content: "";
+                    display: inline-block;
+                    width: 1.5em;
+                    height: 1.5em;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    background-color: #444;
+                    color: white;
+                    line-height: 1.75em;
+                    text-align: center;
+                }
+                &:before {
+                    opacity: 0;
+                    content: "√";
+                    z-index: 1;
+                }
+                &:checked {
+                    &:before {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .grid {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height .25s ease;
+                padding-right: 4rem;
+                input[type="checkbox"] {
+                    margin-right: 1em;
+                }
+                input[type="date"] {
+                    width: 100%;
+                    border: 0;
+                }
+                &:before {
+                    content: "";
+                    padding-top: 1rem;
+                    border-top: 2px solid #444;
+                    display: block;
+                }
+            }
+
+            &:not(.isDone):hover, &:not(.isDone):focus {
+                border-bottom-width: 2em;
+                .grid {
+                    max-height: 500px;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeDown {
+    0% { opacity: 0; transform: translateY(-2em); }
+    100% { opacity: 1; transform: translateY(0); }
 }
